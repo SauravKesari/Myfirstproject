@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicApp</title>
+    <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body>
+    <div class="main_container">
+        <div class="music_container">
+            <h2 id="title">On My Vacation</h2>
+            <h3 id="artist">Dirty Heads</h3>
+            <div class="image_container">
+                <img src="image/image-1.jpg" alt="image1">
+            </div>
+            <audio src="audio/music1.mp3"></audio>
+            <div class="music_controls">
+                <i class="fa fa-backward" id="prev" title="Previous"></i>
+                <i class="fa fa-play  main-button" id="play" title="Play" aria-hidden="true"></i>
+                 <i class="fa fa-forward" id="next" title="Next"></i>
+                </div>
+        </div>
+    </div>
+    <script>
+        const play=document.getElementById("play");
+        const audio=document.querySelector("audio");
+        const img=document.querySelector("img");
+        const artist=document.getElementById("artist");
+        const title=document.getElementById("title");
+        const prev=document.getElementById("prev");
+        const next=document.getElementById("next");
+        let isPlaying=false;
+        //songs list
+        const songs=[{
+            name:"image-1",
+            title:"Alone",
+            artist:"Alan Walker",
+            audio:"music1.mp3",
+        },
+        {
+            name:"image-2",
+            title:"Sugar & Brownies",
+            artist:"Diara",
+            audio:"music2.mp3",
+        },
+        {
+            name:"image-3",
+            title:"Faded",
+            artist:"Alan Walker",
+            audio:"music3.mp3",
+       
+        }
+    ]
+        //play music
+        const playmusic=()=>{
+            img.classList.add("anime");
+            audio.play();
+            isPlaying=true;
+            play.classList.replace("fa-play","fa-pause");
+        }
+        //for pause the music
+        const pausemusic=()=>{
+            isPlaying=false;
+            img.classList.remove("anime");
+            audio.pause();
+             play.classList.replace("fa-pause","fa-play");
+        }
+        //start and stop music
+        play.addEventListener('click',()=>{
+        isPlaying?pausemusic():playmusic();  
+        })
+        //changing the music data
+        const loadsong=(songs)=>{
+            title.textContent=songs.title;
+            artist.textContent=songs.artist;
+            audio.src="audio/"+songs.audio;
+            img.src="image/"+songs.name+".jpg";
+        }
+
+        //loadsong(songs[2]);
+        songIndex=0;
+        const nextsong=()=>{
+            songIndex=(songIndex+1)%songs.length;
+            loadsong(songs[songIndex]);
+            }
+        const prevsong=()=>
+        {
+            songIndex=(songIndex-1+songs.length)%songs.length;
+            loadsong(songs[songIndex]);
+           
+        }
+        next.addEventListener('click',nextsong);
+        prev.addEventListener('click',prevsong);
+ </script>
+</body>
+</html>
